@@ -20,20 +20,26 @@
     2. Ensure docker works with `$ docker run hello-world`
     3. Install docker-compose: https://docs.docker.com/compose/install/
     4. Ensure docker-compose works: `$ docker-compose --version`
-5. Clone this repository
+2. Clone this repository
    ```sh
    $ git clone --recurse-submodules https://github.com/alangecker/bigbluebutton-docker.git bbb-docker
    $ cd bbb-docker
    ```
-6. Run setup:
+3. Run setup: for creating .env file
    ```bash
    $ ./scripts/setup
    ```
-7. Start containers:
+   Please modify .env file if you need. 
+   If you use greenlight, add "GREENLIGHT_ENDPOINT=https://www.example.com/bigbluebutton/api" in .env file.
+   Please also check the following:https://docs.bigbluebutton.org/dev/api.html#overview
+4. Start each container by implementing the following docker-compose commands separately: 
     ```bash
-    $ ./scripts/compose up -d
+    $ docker-compose up -d
+    $ docker-compose -f docker-compose.greenlight.yml up -d
+    $ docker-compose -f ..... up -d
+    $ .....
     ```
-8. If you use greenlight, you can create an admin account with:
+5. If you use greenlight, after starting greenlight containers, create an admin account:
     ```bash
     $ ./scripts/compose exec greenlight bundle exec rake admin:create
     ```

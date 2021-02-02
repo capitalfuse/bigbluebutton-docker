@@ -15,15 +15,15 @@ ENV NODE_ENV production
 # we simply delete the .git file
 RUN cp config/default.example.yml config/production.yml \
  && chown -R webrtc-sfu:webrtc-sfu config \
- && rm .git \
+# && rm .git \
  && npm install --unsafe-perm \
  && npm cache clear --force
 
 
 # remove automatic IP detection (broken in alpine)
 # and use sh instead of bash
-RUN sed -i 's/CONTAINER_IP=.*/CONTAINER_IP=10.7.7.10/' /app/docker-entrypoint.sh \
-    && sed -i 's/bash/sh/' /app/docker-entrypoint.sh
+RUN sed -i 's/CONTAINER_IP=.*/CONTAINER_IP=10.7.7.10/' ./docker-entrypoint.sh \
+    && sed -i 's/bash/sh/' ./docker-entrypoint.sh
 
 USER webrtc-sfu
 ENTRYPOINT [ "./docker-entrypoint.sh" ]

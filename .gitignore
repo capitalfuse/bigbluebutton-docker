@@ -12,3 +12,4 @@
 # App generated
 .env
 postgres-data
+etherpad-lite

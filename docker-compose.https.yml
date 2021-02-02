@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.3'
 services:
   https_proxy:
     image: valian/docker-nginx-auto-ssl

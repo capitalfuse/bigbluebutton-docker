@@ -15,10 +15,20 @@ for IP in "${ADDR[@]}"; do
     iptables -I INPUT  -p udp --dport 5060 -s $IP -j ACCEPT
 done
 
-chown -R freeswitch:daemon /var/freeswitch/meetings
+# create user 'freeswitch'
+# add it to group 'freeswitch'
+# change owner and group of the freeswitch installation
+cd /opt
+groupadd freeswitch
+adduser --quiet --system --home /opt/freeswitch --gecos "FreeSWITCH open source softswitch" --ingroup freeswitch freeswitch --disabled-password
+chown -R freeswitch:freeswitch /opt/freeswitch/
+chmod -R ug=rwX,o= /opt/freeswitch/
+chmod -R u=rwx,g=rx /opt/freeswitch/bin/*
+
+chown -R freeswitch:freeswitch /var/freeswitch/meetings
 chmod 777 /var/freeswitch/meetings
 
 dockerize \
     -template /etc/freeswitch/vars.xml.tmpl:/etc/freeswitch/vars.xml \
     -template /etc/freeswitch/autoload_configs/conference.conf.xml.tmpl:/etc/freeswitch/autoload_configs/conference.conf.xml \
-    /usr/bin/freeswitch -u freeswitch -g daemon -nonat -nf
+    /opt/freeswitch/bin/freeswitch -u freeswitch -g freeswitch -nonat -nf

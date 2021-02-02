@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.3'
 
 services:
   bbb-web:
@@ -8,15 +8,15 @@ services:
         - redis
         - libreoffice
     environment:
-      DEV_MODE: ${DEV_MODE:-}
+      DEV_MODE: ${DEV_MODE:-false}
       DOMAIN: ${DOMAIN}
       ENABLE_RECORDING: ${ENABLE_RECORDING:-false}
       SHARED_SECRET: ${SHARED_SECRET}
-      WELCOME_MESSAGE: ${WELCOME_MESSAGE:-}
+      WELCOME_MESSAGE: ${WELCOME_MESSAGE:-false}
       WELCOME_FOOTER: ${WELCOME_FOOTER}
       STUN_SERVER: stun:${STUN_IP}:${STUN_PORT}
-      TURN_SERVER: ${TURN_SERVER:-}
-      TURN_SECRET: ${TURN_SECRET:-}
+      TURN_SERVER: ${TURN_SERVER:-false}
+      TURN_SECRET: ${TURN_SECRET:-false}
     volumes:
       - bigbluebutton:/var/bigbluebutton
       - vol-freeswitch:/var/freeswitch/meetings
@@ -40,7 +40,7 @@ services:
       DOMAIN: ${DOMAIN}
       EXTERNAL_IPv4: ${EXTERNAL_IPv4}
       EXTERNAL_IPv6: ${EXTERNAL_IPv6:-::1}
-      SIP_IP_ALLOWLIST: ${SIP_IP_ALLOWLIST:-}
+      SIP_IP_ALLOWLIST: ${SIP_IP_ALLOWLIST:-true}
       DISABLE_SOUND_MUTED: ${DISABLE_SOUND_MUTED:-false}
       DISABLE_SOUND_ALONE: ${DISABLE_SOUND_ALONE:-false}
     volumes:
@@ -63,13 +63,13 @@ services:
     network_mode: host
     extra_hosts:
       - "host.docker.internal:10.7.7.1"
-      - "core:10.7.7.2"
+      - "bbb-web:10.7.7.2"
       - "etherpad:10.7.7.4"
       - "webrtc-sfu:10.7.7.10"
       - "html5:10.7.7.11"
 
   etherpad:
-    build: mod/etherpad
+    build: ./etherpad-lite
     restart: unless-stopped
     depends_on:
       - redis
@@ -101,17 +101,15 @@ services:
       KMS_STUN_PORT: ${STUN_PORT}
       KMS_MIN_PORT: 24577
       KMS_MAX_PORT: 32768
-      KMS_TURN_URL:
-      KMS_NETWORK_INTERFACES: ${NETWORK_INTERFACE:-}
+      KMS_TURN_URL: stun.freeswitch.org
+      KMS_NETWORK_INTERFACES: ${NETWORK_INTERFACE:-true}
       GST_DEBUG: 3,Kurento*:4,kms*:4,KurentoWebSocketTransport:5
     network_mode: host
     volumes:
       - vol-kurento:/var/kurento
   
   webrtc-sfu:
-    build: 
-      context: ./bbb-webrtc-sfu
-      dockerfile: ../mod/webrtc-sfu/Dockerfile
+    build: ./bbb-webrtc-sfu
     restart: unless-stopped
     depends_on:
       - redis
@@ -154,7 +152,7 @@ services:
       CHAT_ENABLED: ${CHAT_ENABLED:-true}
       CHAT_START_CLOSED: ${CHAT_START_CLOSED:-false}
       BREAKOUTROOM_LIMIT: ${BREAKOUTROOM_LIMIT:-8}
-      DEV_MODE: ${DEV_MODE:-}
+      DEV_MODE: ${DEV_MODE:-false}
     networks:
       bbb-net:
         ipv4_address: 10.7.7.11
