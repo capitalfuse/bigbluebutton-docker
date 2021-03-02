@@ -73,8 +73,8 @@
     <param name="ext-sip-ip" value="auto-nat"/>
     -->
 
-    <param name="rtp-ip" value="0.0.0.0"/>
-    <param name="sip-ip" value="0.0.0.0"/>
+    <param name="rtp-ip" value="$${local_ip_v4}"/>
+    <param name="sip-ip" value="$${local_ip_v4}"/>
     <param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
     <param name="ext-sip-ip" value="$${external_sip_ip}"/>
 
@@ -113,7 +113,7 @@
     <param name="tls-verify-in-subjects" value=""/>
     <!-- TLS version ("sslv23" (default), "tlsv1"). NOTE: Phones may not work with TLSv1 -->
     <param name="tls-version" value="$${sip_tls_version}"/>
-    <param name="ws-binding"  value="0.0.0.0:5066"/>
+    <param name="ws-binding"  value="$${local_ip_v4}:5066"/>
     <param name="wss-binding"  value="$${local_ip_v4}:7443"/>
     
 

@@ -21,12 +21,10 @@ cd freeswitch && \
 # Because we're in a branch that will go through many rebases, it's
 # better to set this one, or you'll get CONFLICTS when pulling (update).
 git config pull.rebase true && \
-  
+#  
 # ... and do the build
 ./bootstrap.sh -j && \
-./configure --disable-core-odbc-support --disable-core-pgsql-support \
-    --without-python --without-erlang --without-java \
-    --prefix=/opt/freeswitch CFLAGS="-Wno-error -Og -ggdb" CXXFLAGS="-Wno-error -Og -ggdb" && \
+./configure && \
 make && make install
 
 # install dockerize
@@ -39,7 +37,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 # we use svn for retrieving the files since the repo is quite large,
 # git sparse-checkout is not yet available with buster and there
 # is no other sane way of downloading a single directory via git
-ENV GIT_TAG v2.2.9-freeswitch
+ENV GIT_TAG v2.3-alpha-6
 RUN cd /etc \
     && svn checkout https://github.com/alangecker/bbb-packages/tags/$GIT_TAG/bbb-freeswitch-core/data/opt/freeswitch/etc/freeswitch \
     && rm -rf /etc/freeswitch/.svn

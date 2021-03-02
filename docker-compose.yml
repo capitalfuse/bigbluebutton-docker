@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.5'
 
 services:
   bbb-web:
@@ -39,7 +39,8 @@ services:
     environment:
       DOMAIN: ${DOMAIN}
       EXTERNAL_IPv4: ${EXTERNAL_IPv4}
-      EXTERNAL_IPv6: ${EXTERNAL_IPv6:-::1}
+      EXTERNAL_IPv6: ${EXTERNAL_IPv6}
+#      EXTERNAL_IPv6: ${EXTERNAL_IPv6:-::1}
       SIP_IP_ALLOWLIST: ${SIP_IP_ALLOWLIST:-true}
       DISABLE_SOUND_MUTED: ${DISABLE_SOUND_MUTED:-false}
       DISABLE_SOUND_ALONE: ${DISABLE_SOUND_ALONE:-false}
@@ -62,7 +63,7 @@ services:
       - ${DEFAULT_PRESENTATION:-/dev/null}:/etc/nginx/html/default.pdf
     network_mode: host
     extra_hosts:
-      - "host.docker.internal:10.7.7.1"
+      - "host.docker.internal:10.7.7.1" #for nginx conf for greenlight and vetro
       - "bbb-web:10.7.7.2"
       - "etherpad:10.7.7.4"
       - "webrtc-sfu:10.7.7.10"

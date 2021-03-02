@@ -17,34 +17,38 @@
   <!--
       The following variables are set dynamically - calculated if possible by freeswitch - and
       are available to the config as $${variable}.  You can see their calculated value via fs_cli
-      by entering eval $${variable}
+      by entering "eval $${variable}" on freeswitch console.
 
-      hostname
-      local_ip_v4
-      local_mask_v4
-      local_ip_v6
-      switch_serial
-      base_dir
-      recordings_dir
-      sound_prefix
-      sounds_dir
-      conf_dir
-      log_dir
-      run_dir
-      db_dir
-      mod_dir
-      htdocs_dir
-      script_dir
-      temp_dir
-      grammar_dir
-      certs_dir
-      storage_dir
-      cache_dir
+      hostname ---> host pc name
+      local_ip_v4 ---> 10.7.7.1
+      local_mask_v4 ---> 255.255.255.0
+      local_ip_v6 ---> ::1
+      switch_serial ---> -ERR no reply
+      base_dir ---> /
+      recordings_dir ---> /var/lib/freeswitch/recordings
+      sound_prefix ---> /share/freeswitch/sounds/en/us/callie
+      sounds_dir ---> -ERR no reply
+      conf_dir ---> /etc/freeswitch
+      log_dir ---> /var/log/freeswitch
+      run_dir ---> /var/run/freeswitch
+      db_dir ---> /var/lib/freeswitch/db
+      mod_dir ---> /lib/freeswitch/mod
+      htdocs_dir ---> /share/freeswitch/htdocs
+      script_dir ---> /share/freeswitch/scripts
+      temp_dir ---> /tmp
+      grammar_dir ---> /share/freeswitch/grammar
+   ***certs_dir ---> /etc/freeswitch/tls
+      storage_dir ---> /var/lib/freeswitch/storage
+      cache_dir ---> /var/cache/freeswitch
       core_uuid
-      zrtp_enabled
-      nat_public_addr
-      nat_private_addr
-      nat_type
+      zrtp_enabled ---> -ERR no reply
+      nat_public_addr ---> -ERR no reply
+      nat_private_addr ---> -ERR no reply
+      nat_type ---> -ERR no reply
+      external_ip_v4 ---> 192.168.x.x(host pc local IPv4)
+      external_ip_v6 ---> xx:xx:xx:xx(host pc local IPv6)
+      domain ---> www.example.com
+      domain_name ---> www.example.com
 
   -->
 
