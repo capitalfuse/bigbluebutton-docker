@@ -13,3 +13,7 @@
 .env
 postgres-data
 etherpad-lite
+bbb-fs-conf
+fs-conf
+letsencrypt
+fs-vars

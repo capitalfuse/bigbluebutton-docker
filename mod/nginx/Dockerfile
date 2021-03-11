@@ -1,8 +1,8 @@
 FROM nginx:1.19-alpine
 
-RUN apk add subversion
+RUN apk add --no-cache subversion certbot-nginx nano
 
-ENV TAG v2.3-alpha-3
+ENV TAG v2.3-alpha-7
 
 # get bbb-playback-presentation web files
 RUN mkdir /www \

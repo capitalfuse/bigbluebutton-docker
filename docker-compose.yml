@@ -36,18 +36,20 @@ services:
       - NET_BROADCAST
       - SYS_NICE
       - SYS_RESOURCE
-    environment:
-      DOMAIN: ${DOMAIN}
-      EXTERNAL_IPv4: ${EXTERNAL_IPv4}
-      EXTERNAL_IPv6: ${EXTERNAL_IPv6}
+#    environment:
+#      DOMAIN: ${DOMAIN}
+#      EXTERNAL_IPv4: ${EXTERNAL_IPv4}
+#      EXTERNAL_IPv6: ${EXTERNAL_IPv6}
 #      EXTERNAL_IPv6: ${EXTERNAL_IPv6:-::1}
-      SIP_IP_ALLOWLIST: ${SIP_IP_ALLOWLIST:-true}
-      DISABLE_SOUND_MUTED: ${DISABLE_SOUND_MUTED:-false}
-      DISABLE_SOUND_ALONE: ${DISABLE_SOUND_ALONE:-false}
+#      SIP_IP_ALLOWLIST: ${SIP_IP_ALLOWLIST:-true}
+#      DISABLE_SOUND_MUTED: ${DISABLE_SOUND_MUTED:-false}
+#      DISABLE_SOUND_ALONE: ${DISABLE_SOUND_ALONE:-false}
     volumes:
-      - ./conf/sip_profiles:/etc/freeswitch/sip_profiles/external
-      - ./conf/dialplan_public:/etc/freeswitch/dialplan/public_docker
       - vol-freeswitch:/var/freeswitch/meetings
+    # letsencrypt certbot
+      - ./letsencrypt:/usr/local/freeswitch/certs
+    # freeswitch conf/vars.xml
+      - ./fs-vars/vars.xml:/usr/local/freeswitch/conf/vars.xml
     network_mode: host
   
   nginx:
@@ -61,6 +63,8 @@ services:
       - bigbluebutton:/var/bigbluebutton
       - html5-static:/html5-static:ro
       - ${DEFAULT_PRESENTATION:-/dev/null}:/etc/nginx/html/default.pdf
+      # letsencrypt certbot
+      - ./letsencrypt:/etc/letsencrypt/archive
     network_mode: host
     extra_hosts:
       - "host.docker.internal:10.7.7.1" #for nginx conf for greenlight and vetro
